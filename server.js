@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
+var chatserver = require('./lib/chat_server');
 var cache = {};
 var serverPort = 8080;
 
@@ -60,4 +61,6 @@ var server = http.createServer(function(request, response) {
 server.listen(serverPort, function() {
   console.log("Server starting on port " + serverPort);
 })
+
+chatserver.listen(server);
 
