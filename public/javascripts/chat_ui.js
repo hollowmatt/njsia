@@ -28,21 +28,24 @@ function processUserInput(chatApp, socket) {
 //execute on document load
 $(document).ready(function() {
   var chatApp = new Chat(socket);
-
   socket.on('nameResult', function(result) {
     var message;
-
     if (result.success) {
       message = 'You are now known as ' + result.name + '.';
     } else {
       message = result.message;
     }
-    $('#message').append(divSystemContentElement(message));
+    $('#messages').append(divSystemContentElement(message));
   });
 
   socket.on('joinResult', function(result) {
     $('#room').text(result.room);
     $('#messages').append(divSystemContentElement('Room changed.'));
+  });
+
+  socket.on('message', function(message) {
+    var newElement = $('<div></div>').text(message.text);
+    $('#messages').append(newElement);
   });
 
   socket.on('rooms', function(rooms) {
